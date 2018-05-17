@@ -12,12 +12,12 @@ var router = express.Router();
 
 log.info("Starting Bot");
 const db = new repo(secret.Repository);
-var YOUQlik = new SkillBot({token : secret.YOUQlik.token, 
-                            name: secret.YOUQlik.name}, 
+var BOTToken = new SkillBot({token : secret.BOTToken.token, 
+                            name: secret.BOTToken.name}, 
                             db);
 
 
-const cv = new conversation(YOUQlik, db);
+const cv = new conversation(BOTToken, db);
 
 
 
@@ -32,7 +32,7 @@ router.route('/sendMessage/interactive')
 .post(function (req, res, body){
     var payload = JSON.parse(req.body.payload);
     res.status(200).json();
-    if(payload.token === secret.YOUQlik.VerificationToken){
+    if(payload.token === secret.BOTToken.VerificationToken){
         log.info("Received valid interactive response. Token verified!");
         log.info("Interactive component req : ", payload);
         
