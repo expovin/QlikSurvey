@@ -57,10 +57,22 @@ router.route('/sendMessage/interactive')
 
 router.route('/happiness')
 .get(function(req, res, next) {
-    db.getUsers( true)
 
-    .then( users =>{
-        return cv.askForHappiness(users);
+    var _users;
+    var _message;
+
+    db.getUsers(true)
+
+    .then( users => {
+        _users=users;
+        return db.getFirstTaskMessage(0)
+    })
+    .then( result => {
+        _message=result.message;
+        return db.getTaskAttechments(0);
+    })
+    .then( attach =>{
+        return cv.askForHappiness(_users, _message, attach);
     } )
     .then ( result =>{
         res.json(result);
@@ -70,5 +82,18 @@ router.route('/happiness')
         res.json(error);
     })
 })
+
+router.route('/test')
+.get(function(req, res, next) {
+    db.getTaskAttechments(0)
+    .then( data =>{
+        res.json(data);
+    })
+    .catch( error => {
+        res.json(error);
+    })
+})
+
+
 
 module.exports = router;
