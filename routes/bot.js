@@ -30,6 +30,8 @@ router.route('/')
 
 router.route('/sendMessage/interactive')
 .post(function (req, res, body){
+    log.trace("Get the content : ",req.body);
+    log.trace("Header : ",req.headers);
     var payload = JSON.parse(req.body.payload);
     res.status(200).json();
     if(payload.token === secret.BOTToken.VerificationToken){
