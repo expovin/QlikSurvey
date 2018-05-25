@@ -30,10 +30,8 @@ router.route('/')
 
 router.route('/sendMessage/interactive')
 .post(function (req, res, body){
-    log.trace("Get the content : ",req.body);
-    log.trace("Header : ",req.headers);
     var payload = JSON.parse(req.body.payload);
-    res.status(200).json();
+    //res.status(200).json();
     if(payload.token === secret.BOTToken.VerificationToken){
         log.info("Received valid interactive response. Token verified!");
         log.info("Interactive component req : ", payload);
@@ -47,7 +45,7 @@ router.route('/sendMessage/interactive')
         cv.handleResponse(payload)
         .then( (response) =>{
             log.info("Comunication complete!");
-            //res.status(200).json(response);
+            res.status(200).json(response);
         })
         .catch( error =>{
             log.error("Error handling the user interactive response :",error);
